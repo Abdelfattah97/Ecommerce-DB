@@ -7,6 +7,8 @@
 <p>
 <b>Schema Diagram</b>
 <img src="e-commerce-db-schema.png" />
+</p>
+<p>
 <b>ER-Diagram</b>
 <img src="e_commerce-ERD.jpg" />
 </p>
