@@ -18,7 +18,7 @@
   - [Dummy Data Insertion Script](Insert%20Data.sql)
 - [Total Revenue For Specific Date (Function Script)](Total%20Revenue-Specific%20Date_Function.sql)
     <p><img src="Total-Revenue-Result.jpg" /></p>
-- [Monthly Repoty Top Selling (Function Script) ](Monthly%20Report%20Top%20Selling_Function.sql)
+- [Monthly Report Top Selling (Function Script) ](Monthly%20Report%20Top%20Selling_Function.sql)
     <p><img src="Top-Ten-Selling-Product-Results.jpg" /></p>
-- [Filtered Customers List (Function Script) ](Filtered_Customers_List.sql)
+- [Filtered Customers List (Script) ](Filtered_Customers_List.sql)
     <p><img src="Filtered_Customer_List_Result.jpg" /></p>
