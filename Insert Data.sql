@@ -38,3 +38,20 @@ SELECT
     floor(random() * 5 + 1) AS quantity,  -- quantity between 1 and 5
     (random() * 200 + 10)::numeric(10,2) AS unit_price  -- unit price between 10 and 210
 FROM generate_series(1, 1000) i;
+
+-- update order.total_amount with order_items --> total_amount
+update "order" o 
+SET total_amount = (
+select sum(oi.quantity*oi.unit_price)
+from order_item oi
+where oi.order_fk = o.order_id
+)
+where exists (
+select 1
+from order_item oi
+where oi.order_fk=o.order_id
+)
+
+-- delete orders that are not referenced by order_items
+delete from "order" as o
+where (select count(order_fk) from order_item where order_fk=o.order_id) <1
