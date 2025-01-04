@@ -1,8 +1,9 @@
-## Database Task
+## Ecommerce DB
 
-This repository contains tasks and assignment solutions for the database phase of Eng/Ahmed Emad's mentorship.
+This repository contains tasks and solutions from the database phase of Eng/Ahmed Emad's mentorship program. 
+The focus is on designing, querying and optimizing Ecommerce database to generate effecient reports and insights.
 
-The Tasks in this repository revolves around an e-commerce DB sample.
+**Datbase used:** PostgreSQL 
 
 ## Content
 
