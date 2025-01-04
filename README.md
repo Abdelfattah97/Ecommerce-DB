@@ -1,8 +1,9 @@
-## Database Task
+## Ecommerce DB
 
-This repository contains tasks and assignment solutions for the database phase of Eng/Ahmed Emad's mentorship.
+This repository contains tasks and solutions from the database phase of Eng/Ahmed Emad's mentorship program. 
+The focus is on designing, querying and optimizing Ecommerce database to generate effecient reports and insights.
 
-The Tasks in this repository revolves around an e-commerce DB sample.
+**Datbase used:** PostgreSQL-16
 
 ## Content
 
@@ -266,8 +267,6 @@ This Section contains more queries on the e-commerce schema from [Session (2.1)]
   - Search product containing "\<word\>" either in name or description.
   - Write query to suggest popular products in the same category and the same author excluding purchased product from recommendations.
   - A Trigger on insert to create a sale history, when a new order is made in "Orders" table inclide (order date, customer, product, total amount, quantity).
-  - Write a transaction query to lock the field quantity with product id = 211 from being updated.
-  - Write a transaction query to lock row with product id = 211 from being updated.
 
 ### Solution
 
