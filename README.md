@@ -250,8 +250,6 @@ This Section contains more queries on the e-commerce schema from [Session (2.1)]
   - Search product containing "\<word\>" either in name or description.
   - Write query to suggest popular products in the same category and the same author excluding purchased product from recommendations.
   - A Trigger on insert to create a sale history, when a new order is made in "Orders" table inclide (order date, customer, product, total amount, quantity).
-  - Write a transaction query to lock the field quantity with product id = 211 from being updated.
-  - Write a transaction query to lock row with product id = 211 from being updated.
 
 ### Solution
 
