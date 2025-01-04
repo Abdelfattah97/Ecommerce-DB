@@ -20,6 +20,14 @@ The Tasks in this repository revolves around an e-commerce DB sample.
 - [Session 4 (2.2) Task](#session-4-22-task)
   - [Summary & Tasks](#summary-1)
   - [Solution](#solution-1)
+    - [ERD](#erd-1)
+    - [Initial Data](#initial-data-1)
+    - [Sale History Denormalization](#sale-history-denormalization)
+      - [Create Table Sale History](#create-table-sale-history)
+      - [Insert Existing Data to Sale History](#insert-existing-data-to-sale-history)
+      - [Trigger To Synchronize Sale History](#trigger-to-synchronize-sale-history)
+    - [Search Product Containing Word](#search-products-containing-a-word)
+    - [Product Recommendations](#product-recommendations)
 
 ## Session 3 (2.1) Task:
 
@@ -29,7 +37,7 @@ This section will contain db design, creation, intialization, and generating som
 
 - Entities:
 <p> 
-<img src="Task-Entities.jpg" />
+<img src="Session 3 (2.1)/Task-Entities.jpg" />
 </p>
 
 - Tasks:
@@ -49,11 +57,11 @@ This section will contain db design, creation, intialization, and generating som
 
 <p>
 <b>Schema Diagram</b>
-<img src="e-commerce-db-schema.png" />
+<img src="Session 3 (2.1)/e-commerce-db-schema.png" />
 </p>
 <p>
 <b>ER-Diagram</b>
-<img src="e_commerce-ERD.jpg" />
+<img src="Session 3 (2.1)/e_commerce-ERD.jpg" />
 </p>
 
 ---
@@ -62,9 +70,12 @@ This section will contain db design, creation, intialization, and generating som
 
 - Initial Data \
   Scripts for creating tables and filling them with dummy data.
-  - ##### [Table Creation Script](Create%20tables.sql)
-  - ##### [Dummy Data Insertion Script](Insert%20Data.sql)
-- ##### [Total Revenue Of Specific Day](Total%20Revenue-Specific%20Date_Function.sql)
+  - ##### [Table Creation Script](<Session%203%20(2.1)/SQL/Create%20tables.sql>)
+    This file contains the script creating the earlier mentioned schema => [ERD](#erd).
+  - ##### [Dummy Data Insertion Script](<Session%203%20(2.1)/SQL/Insert%20Dummy%20Data-2.sql>)
+    This Script Contains a transaction that truncates all data from tables, resets PK sequences and inserts dummy data randomly simulating a real life e-commerce DB case.
+    > As we mentioned that some of the inserted data will be randomly inserted to the database some of the queries results will not have the same result as shown in the examples below.
+- ##### [Total Revenue Of Specific Day](<Session%203%20(2.1)/SQL/Total%20Revenue-Specific%20Date_Function.sql>)
 
   This script generates a report of total revenue of orders in a specific day
 
@@ -107,14 +118,14 @@ This section will contain db design, creation, intialization, and generating som
    select * from total_revenue_by_date('2024-07-23');
   ```
 
-  <p><img src="Total-Revenue-Result.jpg" /></p>
+  <p><img src="Session 3 (2.1)/Total-Revenue-Result.jpg" /></p>
 
   **Columns:**
 
   - **total_revenue:** total price of all date's order items
   - **date:** the date of the total revenue
 
-- ##### [Monthly Top Selling Products](Monthly%20Report%20Top%20Selling_Function.sql)
+- ##### [Monthly Top Selling Products](<Session%203%20(2.1)/SQL/Monthly%20Report%20Top%20Selling_Function.sql>)
 
   This script generates a report showing the top-selling products of a specific month of a year.
 
@@ -171,7 +182,7 @@ This section will contain db design, creation, intialization, and generating som
   ```
 
      <p>
-     <img src="Top-Ten-Selling-Product-Results.jpg" >
+     <img src="Session%203%20(2.1)/Top-Ten-Selling-Product-Results.jpg" >
      </p>
 
   **Columns:**
@@ -181,9 +192,9 @@ This section will contain db design, creation, intialization, and generating som
   - **quantity_sold**: The overall quantity sold across a month of year.
   - **total_revenue:** The total revenue of that product in a month of year.
   - **order_freq:** The ordering count of that product in a month of year or how much orders the product has appeared in.
-  - **month_year:** The month of a year for the result.
+  - **month_year:** The month of a year for the result (included for clarity).
 
-- ##### [Customers With High-Amount Orders](Filtered_Customers_List.sql)
+- ##### [Customers With High-Amount Orders](<Session%203%20(2.1)/SQL/Filtered_Customers_List.sql>)
 
   This script generates a report listing customers who have placed orders totaling more than $500 in the past month.
 
@@ -219,7 +230,7 @@ This section will contain db design, creation, intialization, and generating som
   **Result:** \
    You can see the results by running the above query directly. It will display a list of customers along with their total order amounts.
 
-    <p><img src="Filtered_Customer_List_Result.jpg" /></p>
+    <p><img src="Session 3 (2.1)/Filtered_Customer_List_Result.jpg" /></p>
 
   **Columns:**
 
@@ -237,7 +248,267 @@ This Section contains more queries on the e-commerce schema from [Session (2.1)]
 
 - **Tasks:**
   - Search product containing "\<word\>" either in name or description.
-  - Write query to suggestpopular products in the same category and the same author excluding purchased product from recommendations.
-  - A Trigger on insert to create a sale history, when a new order is made in "Orders" table inclide (order date, customer, product, total amount, quantity ).
-  - Write a transaction query to lock the field quantity with product id = 211 from being updated
-  - Write a transaction query to lock row with product id = 211 from being updated
+  - Write query to suggest popular products in the same category and the same author excluding purchased product from recommendations.
+  - A Trigger on insert to create a sale history, when a new order is made in "Orders" table inclide (order date, customer, product, total amount, quantity).
+  - Write a transaction query to lock the field quantity with product id = 211 from being updated.
+  - Write a transaction query to lock row with product id = 211 from being updated.
+
+### Solution
+
+### ERD
+
+We created the schema in session 3 as shown in the [ERD](#erd) and as tasks mentioned a new entity "Author" we are going to add it to our schema.
+
+> Author is the seller and owner of products group in the system.
+
+Author will contain the following attributes:
+
+- authour_id
+- name
+
+> We will keep it simple for now.
+
+Now Product has a new Many-to-one relationship with the author.
+
+The new ERD look like :
+
+<p>
+<b>Schema Diagram</b>
+<img src="Session 4 (2.2)/e-commerce-db-schema-2.png" />
+</p>
+<p>
+<b>ER-Diagram</b>
+<img src="Session 4 (2.2)/e_commerce-ERD-2.jpg" />
+</p>
+
+### Scripts
+
+- ##### Initial Data
+
+  - [Create Author Table](<Session%204%20(2.2)\SQL\Create%20Author%20Table.sql>)
+  - [Insert Author Data](<Session%204%20(2.2)\SQL\Insert Author Data.sql>)
+  - [Update Product Table](<Session%204%20(2.2)\SQL\Update%20Product%20Table.sql>)
+
+    We will Add author_fk column, add foreign key constraint and connect our existing products to diff authors by filling the new author_fk column with some author ids from th author table.
+
+- ##### Sale History Denormalization
+
+  We will create Sale History table as denormalization for tables containing sales of customers as an optimization technique avoiding the number of joins needed to get a sale record from Customer, Product, Order ,and Order Item tables.
+
+  > Later a trigger will be created to ensure the syncronization of data in this table with the denormalized tables
+
+    <p>
+    <p>Table Design</p>
+    <img src="Session 4 (2.2)/Sale-History-Table-Schema.jpg" />
+    </p>
+    
+    > sale_id will be the same as order_item_id from order_item table and will used as the primary key for sale history table.
+
+  - ##### [Create Table Sale History](<Session%204%20(2.2)\SQL\Create%20Sale%20History%20Table.sql>)
+
+    Firstly we will create a new Sale History table using the following script.
+
+    ```sql
+        -- create table sale history
+            create table sale_history (
+            sale_id bigint primary key,
+            customer_id bigint,
+            first_name varchar(50),
+            last_name varchar(50),
+            product_id bigint,
+            product_name varchar(50),
+            prodcut_description varchar(50),
+            unit_price decimal,
+            quantity int ,
+            total_amount decimal,
+            order_id bigint,
+            order_date date
+            );
+    ```
+
+  - ##### [Insert Existing Data to Sale History](<Session%204%20(2.2)/SQL/Insert%20Existing%20Data%20To%20Sale%20History.sql>)
+
+    Secondly we will fill the table with existing data.
+
+    ```sql
+        -- fill sale_history with existing data
+        with sale_hist as(
+        select oi.order_item_id, c.customer_id, c.first_name, c.last_name,
+        p.product_id ,p.name, p.description,
+        oi.unit_price::decimal, oi.quantity, (oi.quantity*oi.unit_price)::decimal as total_amount,
+        o.order_id, o.order_date
+        from order_item as oi
+        inner join "order" as o
+        on o.order_id = oi.order_fk
+        inner join customer as c
+        on o.customer_fk = c.customer_id
+        inner join product as p
+        on oi.product_fk = p.product_id
+        )
+        insert into sale_history (
+        sale_id,customer_id,first_name ,last_name ,
+        product_id ,product_name, prodcut_description ,
+        unit_price,quantity, total_amount,order_id,order_date
+        );
+    ```
+
+  - ##### [Trigger to Synchronize Sale History](<\Session%204%20(2.2)\SQL\Create%20Trigger%20On%20Order%20Item%20Insertion.sql>)
+
+    This trigger automatically inserts relevant order and customer details into the sale_history table whenever a new record is added to the order_item table. This ensures that the sale_history table stays up-to-date with the latest order data.
+
+    ```sql
+    -- creates a trigger function that inserts the record that fired the trigger into the sale_history table
+    CREATE or REPLACE FUNCTION insert_sale_history() RETURNS trigger
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+        -- insert statement into sale_history table
+            insert into sale_history (
+            sale_id,customer_id,first_name ,last_name ,
+            product_id ,product_name, prodcut_description ,
+            unit_price,quantity, total_amount,order_id,order_date
+            )
+            -- select required data for the sale history table
+            select oi.order_item_id,c.customer_id,c.first_name ,c.last_name ,
+            p.product_id ,p.name, p.description ,
+            oi.unit_price,quantity, (oi.quantity*oi.unit_price) as total_amount, o.order_id, o.order_date
+            -- joins required tables to extract data needed
+            from order_item as oi
+            left join product as p on p.product_id = oi.product_fk
+            left join "order" as o on o.order_id = oi.order_fk
+            left join customer as c on c.customer_id = o.customer_fk
+            -- Includes only newly inserted order_item related data
+            where oi.order_item_id = NEW.order_item_id;
+
+        RETURN NEW;
+        END;
+    $$;
+
+        -- Creates a trigger that fires on each row insert
+        CREATE TRIGGER insert_sale_history_trigger AFTER INSERT ON public.order_item FOR EACH ROW EXECUTE FUNCTION public.insert_sale_history();
+    ```
+
+- ##### [Search Products Containing A Word](<Session%204%20(2.2)/SQL/Search%20Product%20Containing%20Word.sql>)
+
+  Searches Products containing \<word\>.
+
+  > This Script concatenates name and description of the product and uses "ILike" to compare the concatenation with a pattern where "5g" is our desired \<word\> and "%" sign matches one or more characters used before and after the word.
+
+  ```sql
+  select * from product
+  where concat(name,' ',description) ILike '%5g%';
+  ```
+
+  > "5g" is used as it tests both cases whether \<word\> appears in name or in description.
+
+  Result:
+    <p> 
+    <img src="Session 4 (2.2)/Search-Products-Containing-Word-Result.jpg" />
+    </p>
+
+- ##### [Product Recommendations](<\Session%204%20(2.2)\SQL\Popuar%20Relative%20Product%20Recommendations.sql>)
+
+  **Popular Relative Product Recommendation:** which are products by same author and same category that are not purchased by the customer before ordering results by popularity.
+
+    <p>
+    <img src="Session 4 (2.2)/Product-Recommendations-Explaination.jpg"/>
+    </p>
+
+  Achieving the desired results has four requirements (Relative Products, Related Orders ,Customer Non Purchased Products ,Popularity )
+
+  - **Reltive Products:** products by same author and same category of the selected product.
+     <p>
+    <img src="Session 4 (2.2)/Related-Products.jpg"/>
+    </p>
+
+  - **Relative Orders:** Orders containing related products to calculate popularity and determine non purchased products.
+    <p>
+    <img src="Session 4 (2.2)/Related-Orders.jpg"/>
+    </p>
+
+  - **Customer Non Purchased Products:** An anti-join between related products and related orders will be used to filter non purchased products.
+    ```sql
+    FROM
+        RELATIVE_PRODUCTS AS RP
+        -- Anti join to filter non purchased products
+        LEFT JOIN RELATIVE_ORDERS AS RO
+            ON RO.PRODUCT_FK = RP.PRODUCT_ID
+            AND RO.CUSTOMER_FK = 20 -- Non purchased products will be null
+    WHERE -- Anti join condition
+        RO.CUSTOMER_FK IS NULL
+    ```
+  - **Popularity:** The Count of distinct customers per relative product, it will be calculated in a CTE and joined with relative products.
+    <p>
+    <img src="Session 4 (2.2)/product_popularity.jpg"/>
+      </p>
+      
+    **Script:**
+      ```sql
+          WITH
+              RELATIVE_PRODUCTS AS ( -- relative products of same category and same author
+                  -- product columns
+                  SELECT
+                      P.PRODUCT_ID, P.NAME, P.DESCRIPTION, P.PRICE,
+                      P.STOCK_QUANTITY, P.CATEGORY_FK, P.AUTHOR_FK
+                  FROM
+                      PRODUCT AS P
+                      INNER JOIN ( -- inner join to filter only matching category and author from products
+                          SELECT -- select category_fk ad author_fk of a specific product
+                              CATEGORY_FK, AUTHOR_FK
+                          FROM PRODUCT
+                          WHERE PRODUCT_ID = 20
+                      ) AS R
+                      ON R.CATEGORY_FK = P.CATEGORY_FK
+                      AND R.AUTHOR_FK = P.AUTHOR_FK -- filters products by category and author
+              ),
+              RELATIVE_ORDERS AS ( -- set containing distinct (buyer and relative_product)
+                  -- selecting distinct product and customer
+                  SELECT
+                      PRODUCT_FK, CUSTOMER_FK
+                      -- relative products CTE
+                  FROM
+                      RELATIVE_PRODUCTS AS RP
+                      -- join and filter only order_items having relative products
+                      INNER JOIN ORDER_ITEM AS OI
+                      ON RP.PRODUCT_ID = OI.PRODUCT_FK
+                      -- join orders to determine products buyers
+                      INNER JOIN "order" AS O
+                      ON O.ORDER_ID = OI.ORDER_FK
+                      -- group product and customer eliminating duplicates duplicates
+                  GROUP BY
+                      PRODUCT_FK, CUSTOMER_FK
+              ),
+              PRODUCT_POPULARITY AS ( -- set containing product popularity and
+                  SELECT -- product_fk for joining & popularity
+                      RO.PRODUCT_FK, COUNT(CUSTOMER_FK) AS BUYERS
+                      -- This CTE already has no duplicates
+                  FROM RELATIVE_ORDERS AS RO
+                  GROUP BY PRODUCT_FK
+              )
+
+          SELECT -- product details and popularity
+              RP.PRODUCT_ID, RP.NAME, RP.DESCRIPTION, RP.STOCK_QUANTITY,
+              RP.CATEGORY_FK, RP.AUTHOR_FK, POP.BUYERS
+          FROM
+              RELATIVE_PRODUCTS AS RP
+              -- left join to include product popularity
+              LEFT JOIN PRODUCT_POPULARITY AS POP
+                  ON POP.PRODUCT_FK = RP.PRODUCT_ID
+              -- Anti join to filter non purchased products
+              LEFT JOIN RELATIVE_ORDERS AS RO
+                  ON RO.PRODUCT_FK = RP.PRODUCT_ID
+                  AND CUSTOMER_FK = 20
+          WHERE -- Anti join condition
+              RO.CUSTOMER_FK IS NULL
+          ORDER BY -- sort by popularity
+              BUYERS DESC
+          LIMIT 10; -- only top 10 popular products
+
+    ```
+
+    Result:
+
+    <p>
+    <img src="Session 4 (2.2)/Product-Recommendations-Result.jpg"/>
+    </p>
+    ```
