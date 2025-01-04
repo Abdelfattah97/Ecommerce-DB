@@ -3,7 +3,7 @@
 This repository contains tasks and solutions from the database phase of Eng/Ahmed Emad's mentorship program. 
 The focus is on designing, querying and optimizing Ecommerce database to generate effecient reports and insights.
 
-**Datbase used:** PostgreSQL 
+**Datbase used:** PostgreSQL-16
 
 ## Content
 
