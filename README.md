@@ -70,11 +70,27 @@ This section will contain db design, creation, intialization, and generating som
 
 - Initial Data \
   Scripts for creating tables and filling them with dummy data.
+
   - ##### [Table Creation Script](<Session%203%20(2.1)/SQL/Create%20tables.sql>)
     This file contains the script creating the earlier mentioned schema => [ERD](#erd).
   - ##### [Dummy Data Insertion Script](<Session%203%20(2.1)/SQL/Insert%20Dummy%20Data-2.sql>)
+
     This Script Contains a transaction that truncates all data from tables, resets PK sequences and inserts dummy data randomly simulating a real life e-commerce DB case.
+
     > As we mentioned that some of the inserted data will be randomly inserted to the database some of the queries results will not have the same result as shown in the examples below.
+
+    Dummy Data:
+
+    - Specific:
+
+      - 17 Category
+      - 65 Product
+
+    - Randomly:
+      - 10K Customer
+      - 100K Orders
+      - 1M Order_details
+
 - ##### [Total Revenue Of Specific Day](<Session%203%20(2.1)/SQL/Total%20Revenue-Specific%20Date_Function.sql>)
 
   This script generates a report of total revenue of orders in a specific day
@@ -441,68 +457,69 @@ The new ERD look like :
     <p>
     <img src="Session 4 (2.2)/product_popularity.jpg"/>
       </p>
-      
-    **Script:**
-      ```sql
-          WITH
-              RELATIVE_PRODUCTS AS ( -- relative products of same category and same author
-                  -- product columns
-                  SELECT
-                      P.PRODUCT_ID, P.NAME, P.DESCRIPTION, P.PRICE,
-                      P.STOCK_QUANTITY, P.CATEGORY_FK, P.AUTHOR_FK
-                  FROM
-                      PRODUCT AS P
-                      INNER JOIN ( -- inner join to filter only matching category and author from products
-                          SELECT -- select category_fk ad author_fk of a specific product
-                              CATEGORY_FK, AUTHOR_FK
-                          FROM PRODUCT
-                          WHERE PRODUCT_ID = 20
-                      ) AS R
-                      ON R.CATEGORY_FK = P.CATEGORY_FK
-                      AND R.AUTHOR_FK = P.AUTHOR_FK -- filters products by category and author
-              ),
-              RELATIVE_ORDERS AS ( -- set containing distinct (buyer and relative_product)
-                  -- selecting distinct product and customer
-                  SELECT
-                      PRODUCT_FK, CUSTOMER_FK
-                      -- relative products CTE
-                  FROM
-                      RELATIVE_PRODUCTS AS RP
-                      -- join and filter only order_items having relative products
-                      INNER JOIN ORDER_ITEM AS OI
-                      ON RP.PRODUCT_ID = OI.PRODUCT_FK
-                      -- join orders to determine products buyers
-                      INNER JOIN "order" AS O
-                      ON O.ORDER_ID = OI.ORDER_FK
-                      -- group product and customer eliminating duplicates duplicates
-                  GROUP BY
-                      PRODUCT_FK, CUSTOMER_FK
-              ),
-              PRODUCT_POPULARITY AS ( -- set containing product popularity and
-                  SELECT -- product_fk for joining & popularity
-                      RO.PRODUCT_FK, COUNT(CUSTOMER_FK) AS BUYERS
-                      -- This CTE already has no duplicates
-                  FROM RELATIVE_ORDERS AS RO
-                  GROUP BY PRODUCT_FK
-              )
 
-          SELECT -- product details and popularity
-              RP.PRODUCT_ID, RP.NAME, RP.DESCRIPTION, RP.STOCK_QUANTITY,
-              RP.CATEGORY_FK, RP.AUTHOR_FK, POP.BUYERS
-          FROM
-              RELATIVE_PRODUCTS AS RP
-              -- left join to include product popularity
-              LEFT JOIN PRODUCT_POPULARITY AS POP
-                  ON POP.PRODUCT_FK = RP.PRODUCT_ID
-              -- Anti join to filter non purchased products
-              LEFT JOIN RELATIVE_ORDERS AS RO
-                  ON RO.PRODUCT_FK = RP.PRODUCT_ID
-                  AND CUSTOMER_FK = 20
-          WHERE -- Anti join condition
-              RO.CUSTOMER_FK IS NULL
-          ORDER BY -- sort by popularity
-              BUYERS DESC
-          LIMIT 10; -- only top 10 popular products
+    **Script:**
+
+    ```sql
+        WITH
+            RELATIVE_PRODUCTS AS ( -- relative products of same category and same author
+                -- product columns
+                SELECT
+                    P.PRODUCT_ID, P.NAME, P.DESCRIPTION, P.PRICE,
+                    P.STOCK_QUANTITY, P.CATEGORY_FK, P.AUTHOR_FK
+                FROM
+                    PRODUCT AS P
+                    INNER JOIN ( -- inner join to filter only matching category and author from products
+                        SELECT -- select category_fk ad author_fk of a specific product
+                            CATEGORY_FK, AUTHOR_FK
+                        FROM PRODUCT
+                        WHERE PRODUCT_ID = 20
+                    ) AS R
+                    ON R.CATEGORY_FK = P.CATEGORY_FK
+                    AND R.AUTHOR_FK = P.AUTHOR_FK -- filters products by category and author
+            ),
+            RELATIVE_ORDERS AS ( -- set containing distinct (buyer and relative_product)
+                -- selecting distinct product and customer
+                SELECT
+                    PRODUCT_FK, CUSTOMER_FK
+                    -- relative products CTE
+                FROM
+                    RELATIVE_PRODUCTS AS RP
+                    -- join and filter only order_items having relative products
+                    INNER JOIN ORDER_ITEM AS OI
+                    ON RP.PRODUCT_ID = OI.PRODUCT_FK
+                    -- join orders to determine products buyers
+                    INNER JOIN "order" AS O
+                    ON O.ORDER_ID = OI.ORDER_FK
+                    -- group product and customer eliminating duplicates duplicates
+                GROUP BY
+                    PRODUCT_FK, CUSTOMER_FK
+            ),
+            PRODUCT_POPULARITY AS ( -- set containing product popularity and
+                SELECT -- product_fk for joining & popularity
+                    RO.PRODUCT_FK, COUNT(CUSTOMER_FK) AS BUYERS
+                    -- This CTE already has no duplicates
+                FROM RELATIVE_ORDERS AS RO
+                GROUP BY PRODUCT_FK
+            )
+
+        SELECT -- product details and popularity
+            RP.PRODUCT_ID, RP.NAME, RP.DESCRIPTION, RP.STOCK_QUANTITY,
+            RP.CATEGORY_FK, RP.AUTHOR_FK, POP.BUYERS
+        FROM
+            RELATIVE_PRODUCTS AS RP
+            -- left join to include product popularity
+            LEFT JOIN PRODUCT_POPULARITY AS POP
+                ON POP.PRODUCT_FK = RP.PRODUCT_ID
+            -- Anti join to filter non purchased products
+            LEFT JOIN RELATIVE_ORDERS AS RO
+                ON RO.PRODUCT_FK = RP.PRODUCT_ID
+                AND CUSTOMER_FK = 20
+        WHERE -- Anti join condition
+            RO.CUSTOMER_FK IS NULL
+        ORDER BY -- sort by popularity
+            BUYERS DESC
+        LIMIT 10; -- only top 10 popular products
 
     ```
 
@@ -511,4 +528,3 @@ The new ERD look like :
     <p>
     <img src="Session 4 (2.2)/Product-Recommendations-Result.jpg"/>
     </p>
-    ```
