@@ -58,11 +58,11 @@ This section will contain db design, creation, intialization, and generating som
 
 <p>
 <b>Schema Diagram</b>
-<img src="Session 3 (2.1)/e-commerce-db-schema.jpg" />
+<img src="Session 3 (2.1)/e-commerce-db-schema-1.jpg" />
 </p>
 <p>
 <b>ER-Diagram</b>
-<img src="Session 3 (2.1)/e_commerce-ERD.jpg" />
+<img src="Session 3 (2.1)/e_commerce-ERD-1.jpg" />
 </p>
 
 ---
@@ -289,11 +289,11 @@ The new ERD look like :
 
 <p>
 <b>Schema Diagram</b>
-<img src="Session 4 (2.2)/e-commerce-db-schema-2.jpg" />
+<img src="Session 4 (2.2)/e-commerce-db-schema-2-1.jpg" />
 </p>
 <p>
 <b>ER-Diagram</b>
-<img src="Session 4 (2.2)/e_commerce-ERD-2.jpg" />
+<img src="Session 4 (2.2)/e_commerce-ERD-2-1.jpg" />
 </p>
 
 ### Scripts
@@ -426,7 +426,7 @@ The new ERD look like :
   **Popular Relative Product Recommendation:** which are products by same author and same category that are not purchased by the customer before ordering results by popularity.
 
     <p>
-    <img src="Session 4 (2.2)/Product-Recommendations-Explaination.jpg"/>
+    <img src="Session 4 (2.2)/Product-Recommendations-Explaination-1.jpg"/>
     </p>
 
   Achieving the desired results has four requirements (Relative Products, Related Orders ,Customer Non Purchased Products ,Popularity )
