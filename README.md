@@ -57,11 +57,15 @@ This section will contain db design, creation, intialization, and generating som
 #### ERD
 
 <p>
+<p>
 <b>Schema Diagram</b>
+</p>
 <img src="Session 3 (2.1)/e-commerce-db-schema-1.jpg" />
 </p>
 <p>
+<p>
 <b>ER-Diagram</b>
+</p>
 <img src="Session 3 (2.1)/e_commerce-ERD-1.jpg" />
 </p>
 
@@ -288,11 +292,15 @@ Now Product has a new Many-to-one relationship with the author.
 The new ERD look like :
 
 <p>
+<p>
 <b>Schema Diagram</b>
+</p>
 <img src="Session 4 (2.2)/e-commerce-db-schema-2-1.jpg" />
 </p>
 <p>
+<p>
 <b>ER-Diagram</b>
+</p>
 <img src="Session 4 (2.2)/e_commerce-ERD-2-1.jpg" />
 </p>
 
