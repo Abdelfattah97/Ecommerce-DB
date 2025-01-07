@@ -1,6 +1,6 @@
 ## Ecommerce DB
 
-This repository contains tasks and solutions from the database phase of Eng/Ahmed Emad's mentorship program. 
+This repository contains tasks and solutions from the database phase of Eng/Ahmed Emad's mentorship program.
 The focus is on designing, querying and optimizing Ecommerce database to generate effecient reports and insights.
 
 **Datbase used:** PostgreSQL-16
@@ -58,7 +58,7 @@ This section will contain db design, creation, intialization, and generating som
 
 <p>
 <b>Schema Diagram</b>
-<img src="Session 3 (2.1)/e-commerce-db-schema.png" />
+<img src="Session 3 (2.1)/e-commerce-db-schema.jpg" />
 </p>
 <p>
 <b>ER-Diagram</b>
@@ -289,7 +289,7 @@ The new ERD look like :
 
 <p>
 <b>Schema Diagram</b>
-<img src="Session 4 (2.2)/e-commerce-db-schema-2.png" />
+<img src="Session 4 (2.2)/e-commerce-db-schema-2.jpg" />
 </p>
 <p>
 <b>ER-Diagram</b>
