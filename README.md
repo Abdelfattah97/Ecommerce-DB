@@ -535,3 +535,21 @@ The new ERD look like :
     <p>
     <img src="Session 4 (2.2)/Product-Recommendations-Result.jpg"/>
     </p>
+
+## Session 5 (2.3):
+
+### Tasks
+
+- Write a transaction query to lock row where product id is 211 in product table
+- Write a transaction query to lock field quantity where product id is 211 in product table
+
+### Solution
+
+- #### Row Lock
+
+  A Row lock is obtained in postgreSQL by using "for update"
+  this acquires an exclusive lock on a rows of the condition or the whole table if no condition specified
+
+  ```sql
+  select * from product where id = 211 for update;
+  ```
