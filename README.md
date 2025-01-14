@@ -29,6 +29,10 @@ The focus is on designing, querying and optimizing Ecommerce database to generat
       - [Trigger To Synchronize Sale History](#trigger-to-synchronize-sale-history)
     - [Search Product Containing Word](#search-products-containing-a-word)
     - [Product Recommendations](#product-recommendations)
+- [Session 5 (2.3) Task](#session-5-23)
+  - [Tasks](#tasks)
+  - [Solution](#solution-2)
+    - [Row Locking](#row-locking)
 
 ## Session 3 (2.1) Task:
 
@@ -545,7 +549,7 @@ The new ERD look like :
 
 ### Solution
 
-- #### Row Lock
+- #### Row Locking
 
   A Row lock is obtained in postgreSQL by using "for update"
   this acquires an exclusive lock on a rows of the condition or the whole table if no condition specified
