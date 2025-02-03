@@ -22,7 +22,7 @@ The focus is on designing, querying and optimizing Ecommerce database to generat
   - [Summary & Tasks](#summary-1)
   - [Solution](#solution-1)
     - [ERD](#erd-1)
-    - [Initial Data](#initial-data-1)
+    - [Initial Data](#initial-data)
     - [Sale History Denormalization](#sale-history-denormalization)
       - [Create Table Sale History](#create-table-sale-history)
       - [Insert Existing Data to Sale History](#insert-existing-data-to-sale-history)
@@ -313,7 +313,7 @@ The new ERD look like :
 - ##### Initial Data
 
   - [Create Author Table](<Session%204%20(2.2)\SQL\Create%20Author%20Table.sql>)
-  - [Insert Author Data](<Session%204%20(2.2)\SQL\Insert Author Data.sql>)
+  - [Insert Author Data](<Session%204%20(2.2)\SQL\Insert%20Author%20Data.sql>)
   - [Update Product Table](<Session%204%20(2.2)\SQL\Update%20Product%20Table.sql>)
 
     We will Add author_fk column, add foreign key constraint and connect our existing products to diff authors by filling the new author_fk column with some author ids from th author table.
